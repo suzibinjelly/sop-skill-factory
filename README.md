@@ -1,5 +1,7 @@
 # SOP 炼丹炉
 
+[日本語](README_JA.md) · [한국어](README_KO.md) · [Español](README_ES.md) · [English](README_EN.md)
+
 > 把散落的业务文档，炼成一颗可复用的 Claude Code Skill。
 
 ![工作原理](sop-skill-factory.png)
