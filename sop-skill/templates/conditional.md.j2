@@ -1,0 +1,67 @@
+---
+name: {{ name }}
+description: {{ description }}
+---
+
+# {{ name }}
+
+> 类型：conditional（条件分支型）
+
+## 概述
+
+{{ overview }}
+
+{% if inputs %}
+## 输入参数
+
+| 参数名 | 类型 | 必填 | 说明 |
+| ------ | ---- | ---- | ---- |
+{% for p in inputs %}
+| {{ p.param_name }} | {{ p.type }} | {{ p.required }} | {{ p.description }} |
+{% endfor %}
+{% endif %}
+
+## 分支流程
+
+{% for branch in branches %}
+### 分支：{{ branch.condition }}
+
+- **说明**：{{ branch.description }}
+
+{% for step in branch.steps %}
+{{ loop.index }}. {{ step.description }}{% if step.on_failure %}（异常处理：{{ step.on_failure }}）{% endif %}
+
+{% endfor %}
+{% endfor %}
+
+### 默认分支
+
+{{ default_branch }}
+
+{% if merge_point %}
+## 汇合点
+
+{{ merge_point }}
+{% endif %}
+
+## 约束条件
+
+{% for c in constraints %}
+- **{{ c.constraint }}**：{{ c.reason }}
+{% endfor %}
+
+## 质量验证
+
+| 检查项 | 验证方法 | 通过标准 |
+| ------ | -------- | -------- |
+{% for q in quality_gates %}
+| {{ q.check_item }} | {{ q.method }} | {{ q.pass_criteria }} |
+{% endfor %}
+
+## 参考来源
+
+| 要素 | 来源文件 | 来源章节 |
+| ---- | -------- | -------- |
+{% for s in sources %}
+| {{ s.element }} | {{ s.source_file }} | {{ s.source_section }} |
+{% endfor %}

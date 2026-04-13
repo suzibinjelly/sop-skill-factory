@@ -1,0 +1,57 @@
+---
+name: {{ name }}
+description: {{ description }}
+---
+
+# {{ name }}
+
+> 类型：sequential（线性流程型）
+
+## 概述
+
+{{ overview }}
+
+{% if inputs %}
+## 输入参数
+
+| 参数名 | 类型 | 必填 | 说明 |
+| ------ | ---- | ---- | ---- |
+{% for p in inputs %}
+| {{ p.param_name }} | {{ p.type }} | {{ p.required }} | {{ p.description }} |
+{% endfor %}
+{% endif %}
+
+## 执行步骤
+
+{% for step in steps %}
+### 步骤 {{ step.step_id }}：{{ step.name }}
+
+- **说明**：{{ step.description }}
+- **前置条件**：{{ step.preconditions | join('、') }}
+- **输入**：{{ step.inputs | join('、') }}
+- **输出**：{{ step.outputs | join('、') }}
+- **异常处理**：{{ step.on_failure }}
+
+{% endfor %}
+
+## 约束条件
+
+{% for c in constraints %}
+- **{{ c.constraint }}**：{{ c.reason }}
+{% endfor %}
+
+## 质量验证
+
+| 检查项 | 验证方法 | 通过标准 |
+| ------ | -------- | -------- |
+{% for q in quality_gates %}
+| {{ q.check_item }} | {{ q.method }} | {{ q.pass_criteria }} |
+{% endfor %}
+
+## 参考来源
+
+| 要素 | 来源文件 | 来源章节 |
+| ---- | -------- | -------- |
+{% for s in sources %}
+| {{ s.element }} | {{ s.source_file }} | {{ s.source_section }} |
+{% endfor %}

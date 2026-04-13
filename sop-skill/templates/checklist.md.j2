@@ -1,0 +1,52 @@
+---
+name: {{ name }}
+description: {{ description }}
+---
+
+# {{ name }}
+
+> 类型：checklist（检查清单型）
+
+## 概述
+
+{{ overview }}
+
+{% if inputs %}
+## 输入参数
+
+| 参数名 | 类型 | 必填 | 说明 |
+| ------ | ---- | ---- | ---- |
+{% for p in inputs %}
+| {{ p.param_name }} | {{ p.type }} | {{ p.required }} | {{ p.description }} |
+{% endfor %}
+{% endif %}
+
+## 检查项
+
+| ID | 类别 | 名称 | 严重程度 | 检查方法 | 通过标准 | 修复建议 |
+| -- | ---- | ---- | -------- | -------- | -------- | -------- |
+{% for item in items %}
+| {{ item.item_id }} | {{ item.category }} | {{ item.name }} | {{ item.severity }} | {{ item.check_method }} | {{ item.pass_criteria }} | {{ item.fix_suggestion }} |
+{% endfor %}
+
+## 约束条件
+
+{% for c in constraints %}
+- **{{ c.constraint }}**：{{ c.reason }}
+{% endfor %}
+
+## 质量验证
+
+| 检查项 | 验证方法 | 通过标准 |
+| ------ | -------- | -------- |
+{% for q in quality_gates %}
+| {{ q.check_item }} | {{ q.method }} | {{ q.pass_criteria }} |
+{% endfor %}
+
+## 参考来源
+
+| 要素 | 来源文件 | 来源章节 |
+| ---- | -------- | -------- |
+{% for s in sources %}
+| {{ s.element }} | {{ s.source_file }} | {{ s.source_section }} |
+{% endfor %}

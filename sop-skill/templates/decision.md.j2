@@ -1,0 +1,60 @@
+---
+name: {{ name }}
+description: {{ description }}
+---
+
+# {{ name }}
+
+> 类型：decision（决策辅助型）
+
+## 概述
+
+{{ overview }}
+
+{% if inputs %}
+## 输入参数
+
+| 参数名 | 类型 | 必填 | 说明 |
+| ------ | ---- | ---- | ---- |
+{% for p in inputs %}
+| {{ p.param_name }} | {{ p.type }} | {{ p.required }} | {{ p.description }} |
+{% endfor %}
+{% endif %}
+
+## 决策维度
+
+| 维度 | 权重 | 候选选项 |
+| ---- | ---- | -------- |
+{% for d in dimensions %}
+| {{ d.name }} | {{ d.weight }} | {{ d.options | join('、') }} |
+{% endfor %}
+
+## 评分规则
+
+{{ scoring_rules }}
+
+## 推荐逻辑
+
+{{ recommendation_logic }}
+
+## 约束条件
+
+{% for c in constraints %}
+- **{{ c.constraint }}**：{{ c.reason }}
+{% endfor %}
+
+## 质量验证
+
+| 检查项 | 验证方法 | 通过标准 |
+| ------ | -------- | -------- |
+{% for q in quality_gates %}
+| {{ q.check_item }} | {{ q.method }} | {{ q.pass_criteria }} |
+{% endfor %}
+
+## 参考来源
+
+| 要素 | 来源文件 | 来源章节 |
+| ---- | -------- | -------- |
+{% for s in sources %}
+| {{ s.element }} | {{ s.source_file }} | {{ s.source_section }} |
+{% endfor %}

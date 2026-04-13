@@ -1,0 +1,70 @@
+---
+name: {{ name }}
+description: {{ description }}
+---
+
+# {{ name }}
+
+> 类型：approval（审批流程型）
+
+## 概述
+
+{{ overview }}
+
+{% if inputs %}
+## 输入参数
+
+| 参数名 | 类型 | 必填 | 说明 |
+| ------ | ---- | ---- | ---- |
+{% for p in inputs %}
+| {{ p.param_name }} | {{ p.type }} | {{ p.required }} | {{ p.description }} |
+{% endfor %}
+{% endif %}
+
+## 审批人
+
+| 角色 | 条件 | 必须审批 |
+| ---- | ---- | -------- |
+{% for a in approvers %}
+| {{ a.role }} | {{ a.condition }} | {{ a.is_required }} |
+{% endfor %}
+
+## 审批链路
+
+| 步骤 | 审批角色 | 动作 | SLA |
+| ---- | -------- | ---- | --- |
+{% for step in approval_chain %}
+| {{ step.step_id }} | {{ step.approver_role }} | {{ step.action }} | {{ step.sla }} |
+{% endfor %}
+
+## 驳回处理
+
+{{ rejection_handling }}
+
+{% if delegation_rules %}
+## 代审规则
+
+{{ delegation_rules }}
+{% endif %}
+
+## 约束条件
+
+{% for c in constraints %}
+- **{{ c.constraint }}**：{{ c.reason }}
+{% endfor %}
+
+## 质量验证
+
+| 检查项 | 验证方法 | 通过标准 |
+| ------ | -------- | -------- |
+{% for q in quality_gates %}
+| {{ q.check_item }} | {{ q.method }} | {{ q.pass_criteria }} |
+{% endfor %}
+
+## 参考来源
+
+| 要素 | 来源文件 | 来源章节 |
+| ---- | -------- | -------- |
+{% for s in sources %}
+| {{ s.element }} | {{ s.source_file }} | {{ s.source_section }} |
+{% endfor %}

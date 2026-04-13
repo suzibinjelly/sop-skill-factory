@@ -1,0 +1,66 @@
+---
+name: {{ name }}
+description: {{ description }}
+---
+
+# {{ name }}
+
+> 类型：hybrid（混合型）
+
+## 概述
+
+{{ overview }}
+
+{% if inputs %}
+## 输入参数
+
+| 参数名 | 类型 | 必填 | 说明 |
+| ------ | ---- | ---- | ---- |
+{% for p in inputs %}
+| {{ p.param_name }} | {{ p.type }} | {{ p.required }} | {{ p.description }} |
+{% endfor %}
+{% endif %}
+
+## 子技能协调逻辑
+
+{{ coordination_logic }}
+
+{% if data_flow %}
+## 子技能数据流
+
+| 来源子技能 | 目标子技能 | 来源输出 | 目标输入 |
+| ---------- | ---------- | -------- | -------- |
+{% for d in data_flow %}
+| {{ d.from_sub }} | {{ d.to_sub }} | {{ d.from_output }} | {{ d.to_input }} |
+{% endfor %}
+{% endif %}
+
+{% for sub in sub_skills %}
+
+### 子技能：{{ sub.name }}（{{ sub.type }}）
+
+{{ sub.rendered_content }}
+
+{% endfor %}
+
+## 约束条件
+
+{% for c in constraints %}
+- **{{ c.constraint }}**：{{ c.reason }}
+{% endfor %}
+
+## 质量验证
+
+| 检查项 | 验证方法 | 通过标准 |
+| ------ | -------- | -------- |
+{% for q in quality_gates %}
+| {{ q.check_item }} | {{ q.method }} | {{ q.pass_criteria }} |
+{% endfor %}
+
+## 参考来源
+
+| 要素 | 来源文件 | 来源章节 |
+| ---- | -------- | -------- |
+{% for s in sources %}
+| {{ s.element }} | {{ s.source_file }} | {{ s.source_section }} |
+{% endfor %}
